@@ -1,7 +1,7 @@
 #include "ruby.h"
 
 static VALUE next( VALUE self ) {
-    return Qnil;
+    return INT2FIX( 1 );
 }
 
 static VALUE counter;

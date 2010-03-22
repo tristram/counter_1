@@ -9,4 +9,10 @@ class CounterTest < MiniTest::Unit::TestCase
         counter = Counter.new
         assert_instance_of( Counter, counter )
     end
+
+    def test_calling_next_on_counter_object
+        require "lib/counter"
+        counter = Counter.new
+        assert_equal( 1, counter.next )
+    end
 end

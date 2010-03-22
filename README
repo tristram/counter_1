@@ -1,0 +1,9 @@
+The aim of this code fragment is to demonstrate what is necessary
+to produce a C extension to Ruby.
+
+To make the extension interesting it must have some state, so we
+are going to code a counter.  Each call to 'next' should return
+the integers in order, starting from 1.
+
+The file test/counter_test.rb contains the tests to drive the
+development.

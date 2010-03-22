@@ -15,4 +15,11 @@ class CounterTest < MiniTest::Unit::TestCase
         counter = Counter.new
         assert_equal( 1, counter.next )
     end
+
+    def test_next_returns_consecutive_integers
+        require "lib/counter"
+        counter = Counter.new
+        counter.next
+        assert_equal( 2, counter.next )
+    end
 end

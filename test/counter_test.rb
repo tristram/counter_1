@@ -30,4 +30,10 @@ class CounterTest < MiniTest::Unit::TestCase
         counter.reset
         assert_equal( 1, counter.next )
     end
+
+    def test_dont_have_to_start_from_one
+        require "lib/counter"
+        counter = Counter.new( 5 )
+        assert_equal( 6, counter.next )
+    end
 end

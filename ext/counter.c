@@ -7,8 +7,7 @@ typedef struct {
 // C functions
 
 static int next( Counter* cp ) {
-    cp->count++;
-    return cp->count;
+    return ++cp->count;
 }
 
 static void reset( Counter* cp ) {

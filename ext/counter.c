@@ -46,7 +46,7 @@ static VALUE wrap_next( VALUE self ) {
 
 static VALUE wrap_reset( VALUE self ) {
     Counter* cp = retrieve_structure( self );
-    reset();
+    reset( cp );
     return Qnil;
 }    
 

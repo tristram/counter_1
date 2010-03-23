@@ -4,6 +4,19 @@ typedef struct {
     int count;
 } Counter;
 
+// C functions
+
+static int next( Counter* cp ) {
+    cp->count++;
+    return cp->count;
+}
+
+static void reset( Counter* cp ) {
+    cp->count = 0;
+}    
+
+// Memory handling
+
 static void free_structure( Counter* cp ) {
     free( cp );
 }
@@ -18,29 +31,32 @@ static VALUE allocate_structure( VALUE class_name ) {
     );
 }
 
+// Method wrapping
+
 static Counter* retrieve_structure( VALUE self ) {
     Counter* cp;
     Data_Get_Struct( self, Counter, cp );
     return cp;
 }
 
-static VALUE next( VALUE self ) {
+static VALUE wrap_next( VALUE self ) {
     Counter* cp = retrieve_structure( self );
-    cp->count++;
-    return INT2FIX( cp->count );
+    return INT2FIX( next(cp) );
 }
 
-static VALUE reset( VALUE self ) {
+static VALUE wrap_reset( VALUE self ) {
     Counter* cp = retrieve_structure( self );
-    cp->count = 0;
+    reset();
     return Qnil;
 }    
+
+// Define methods
 
 static VALUE counter;
 
 void Init_counter() {
     counter = rb_define_class( "Counter", rb_cObject );
     rb_define_alloc_func( counter, allocate_structure );
-    rb_define_method( counter, "next", next, 0 );
-    rb_define_method( counter, "reset", reset, 0 );
+    rb_define_method( counter, "next", wrap_next, 0 );
+    rb_define_method( counter, "reset", wrap_reset, 0 );
 }

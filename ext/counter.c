@@ -18,16 +18,20 @@ static VALUE allocate_structure( VALUE class_name ) {
     );
 }
 
-static VALUE next( VALUE self ) {
+static Counter* retrieve_structure( VALUE self ) {
     Counter* cp;
     Data_Get_Struct( self, Counter, cp );
+    return cp;
+}
+
+static VALUE next( VALUE self ) {
+    Counter* cp = retrieve_structure( self );
     cp->count++;
     return INT2FIX( cp->count );
 }
 
 static VALUE reset( VALUE self ) {
-    Counter* cp;
-    Data_Get_Struct( self, Counter, cp );
+    Counter* cp = retrieve_structure( self );
     cp->count = 0;
     return Qnil;
 }    

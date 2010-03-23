@@ -1,6 +1,7 @@
 #include "ruby.h"
 
 typedef struct {
+    int count;
 } Counter;
 
 static void free_structure( Counter* cp ) {
@@ -9,6 +10,7 @@ static void free_structure( Counter* cp ) {
 
 static VALUE allocate_structure( VALUE class_name ) {
     Counter* cp = calloc( 1, sizeof(Counter) );
+    cp->count = 3;
     return Data_Wrap_Struct(
             class_name,         // class owning this memory
             0,                  // no mark routine required
@@ -18,11 +20,13 @@ static VALUE allocate_structure( VALUE class_name ) {
 }
 
 static VALUE initialize( VALUE self ) {
-    return self;
+    return Qnil;
 }
 
 static VALUE next( VALUE self ) {
-    return INT2FIX( 1 );
+    Counter* cp;
+    Data_Get_Struct( self, Counter, cp );
+    return INT2FIX( cp->count );
 }
 
 static VALUE counter;

@@ -22,4 +22,12 @@ class CounterTest < MiniTest::Unit::TestCase
         counter.next
         assert_equal( 2, counter.next )
     end
+
+    def test_can_reset_counter
+        require "lib/counter"
+        counter = Counter.new
+        counter.next
+        counter.reset
+        assert_equal( 1, counter.next )
+    end
 end

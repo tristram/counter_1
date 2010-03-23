@@ -47,9 +47,17 @@ static VALUE wrap_reset( VALUE self ) {
     Counter* cp = retrieve_structure( self );
     reset( cp );
     return Qnil;
-}    
+}
 
-// Define methods
+static VALUE wrap_initialize( int argc, VALUE* argv, VALUE self ) {
+    Counter* cp = retrieve_structure( self );
+    VALUE starting_count;
+    rb_scan_args( argc, argv, "01", &starting_count );
+    cp->count = NIL_P(starting_count) ? 0 : FIX2INT(starting_count);
+    return Qnil;
+}
+
+// Export methods
 
 static VALUE counter;
 
@@ -58,4 +66,5 @@ void Init_counter() {
     rb_define_alloc_func( counter, allocate_structure );
     rb_define_method( counter, "next", wrap_next, 0 );
     rb_define_method( counter, "reset", wrap_reset, 0 );
+    rb_define_method( counter, "initialize", wrap_initialize, -1 );
 }

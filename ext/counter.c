@@ -25,10 +25,18 @@ static VALUE next( VALUE self ) {
     return INT2FIX( cp->count );
 }
 
+static VALUE reset( VALUE self ) {
+    Counter* cp;
+    Data_Get_Struct( self, Counter, cp );
+    cp->count = 0;
+    return Qnil;
+}    
+
 static VALUE counter;
 
 void Init_counter() {
     counter = rb_define_class( "Counter", rb_cObject );
     rb_define_alloc_func( counter, allocate_structure );
     rb_define_method( counter, "next", next, 0 );
+    rb_define_method( counter, "reset", reset, 0 );
 }

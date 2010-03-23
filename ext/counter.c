@@ -9,8 +9,7 @@ static void free_structure( Counter* cp ) {
 }
 
 static VALUE allocate_structure( VALUE class_name ) {
-    Counter* cp = calloc( 1, sizeof(Counter) );
-    cp->count = 1;
+    Counter* cp = calloc( 1, sizeof(Counter) );    // guaranteed zeroed memory
     return Data_Wrap_Struct(
             class_name,         // class owning this memory
             0,                  // no mark routine required
@@ -22,6 +21,7 @@ static VALUE allocate_structure( VALUE class_name ) {
 static VALUE next( VALUE self ) {
     Counter* cp;
     Data_Get_Struct( self, Counter, cp );
+    cp->count++;
     return INT2FIX( cp->count );
 }
 
